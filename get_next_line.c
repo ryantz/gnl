@@ -6,7 +6,7 @@
 /*   By: ryatan <ryatan@student.42singapore.sg      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 13:26:51 by ryatan            #+#    #+#             */
-/*   Updated: 2025/12/07 18:17:59 by ryatan           ###   ########.fr       */
+/*   Updated: 2025/12/08 07:49:19 by ryatan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*ft_store(char *buffer, ssize_t bytes_read, char **storage);
 void	ft_add_store(char *remainder, char **storage, ssize_t b_read);
 
+//test
 char	*get_next_line(int fd)
 {
 	char	buffer[BUFFER_SIZE];
