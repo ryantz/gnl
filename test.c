@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ryatan <ryatan@student.42singapore.sg      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 13:26:58 by ryatan            #+#    #+#             */
-/*   Updated: 2025/12/07 17:01:54 by ryatan           ###   ########.fr       */
+/*   Created: 2025/12/04 13:29:51 by ryatan            #+#    #+#             */
+/*   Updated: 2025/12/05 12:08:20 by ryatan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "get_next_line.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
+int	main(void)
+{
+	int		fd;
+	char	*next_line;
 
-// testing lib
-# include <stdio.h>
-
-# ifndef BUFFER_SIZE
-# define BUFFER_SIZE 14
-# endif
-
-// utils
-size_t	ft_strlen(char *str);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strchr(char *s, int c);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
-
-char	*get_next_line(int fd);
-
-#endif
+	fd = open("testfile.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		printf("failed to open file.\n");
+		return (-1);
+	}
+	next_line = get_next_line(fd);
+	printf("%s\n", next_line);
+	free(next_line);
+	return (0);
+}

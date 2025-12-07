@@ -1,7 +1,5 @@
-hello there 1
-hello there 2
-hello there 3
-hello there 4
-hello there 5
-hello there 6
-hello there 7
+there is a very special
+person in the next room that you do not know about!
+where
+do we go
+	from here.
