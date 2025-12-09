@@ -3,6 +3,7 @@
 >[!WARNING]
 >segfault always
 
+![Badge Language] 
 ---
 
 ## Project Description
