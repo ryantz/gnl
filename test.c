@@ -6,7 +6,7 @@
 /*   By: ryatan <ryatan@student.42singapore.sg      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 13:29:51 by ryatan            #+#    #+#             */
-/*   Updated: 2025/12/05 12:08:20 by ryatan           ###   ########.fr       */
+/*   Updated: 2025/12/09 09:10:01 by ryatan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,16 @@
 
 int	main(void)
 {
-	int		fd;
-	char	*next_line;
+	int	fd;
+	char	*str;
 
 	fd = open("testfile.txt", O_RDONLY);
-	if (fd == -1)
+	str = get_next_line(fd);
+	while (str)
 	{
-		printf("failed to open file.\n");
-		return (-1);
+		printf("OUTPUT/line: %s\n", str);
+		free(str);
+		str = get_next_line(fd);
 	}
-	next_line = get_next_line(fd);
-	printf("%s\n", next_line);
-	free(next_line);
 	return (0);
 }
