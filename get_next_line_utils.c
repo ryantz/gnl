@@ -6,7 +6,7 @@
 /*   By: ryatan <ryatan@student.42singapore.sg      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 13:27:05 by ryatan            #+#    #+#             */
-/*   Updated: 2025/12/08 11:40:09 by ryatan           ###   ########.fr       */
+/*   Updated: 2025/12/11 17:44:05 by ryatan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,20 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-int	ft_has_newline(char *s)
+char	*ft_strdup(char *s)
 {
-	int	i;
+	char	*dup;
+	size_t	i;
+	size_t	len;
 
+	len = ft_strlen(s);
+	dup = malloc(sizeof(char) * len + 1);
 	i = 0;
-	while (s[i])
+	while (i < len)
 	{
-		if (s[i] == '\n')
-			return (1);
+		dup[i] = s[i];
 		i++;
 	}
-	return (0);
+	dup[i] = '\0';
+	return (&dup[0]);
 }
