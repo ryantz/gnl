@@ -6,7 +6,7 @@
 /*   By: ryatan <ryatan@student.42singapore.sg      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 20:52:55 by ryatan            #+#    #+#             */
-/*   Updated: 2025/12/12 11:46:29 by ryatan           ###   ########.fr       */
+/*   Updated: 2025/12/14 08:06:44 by ryatan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // use BUFFER_SIZE to allocate memory
 // do not use buffer[BUFFER_SIZE]
 char	*ft_read_line(int fd, char **storage);
-int		ft_newline_strlen(char *input);
+size_t		ft_newline_strlen(char *input);
 void	ft_append_storage(char *data, char **storage);
 
 char	*get_next_line(int fd)
@@ -38,30 +38,27 @@ char	*ft_read_line(int fd, char **storage)
 	char	*buffer;
 	char	*string_return;
 	char	*string_remainder;
-	int		newline_len;
+	size_t		newline_len;
 
 	// assign memory for buffer
 	// SOMETHING IS VERY WRONG HERE
 	buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	bytes_read = read(fd, buffer, BUFFER_SIZE + 1); 
-	buffer[bytes_read + 1] = '\0';
-	printf("DEBUG/log: buffer val: %d\n", buffer[bytes_read]);
-	printf("DEBUG/log: newline_len val: %ld\n", bytes_read);
+	bytes_read = read(fd, buffer, BUFFER_SIZE); 
+	buffer[bytes_read] = '\0';
+	//printf("DEBUG/log: buffer val: %d\n", buffer[bytes_read]);
+	//printf("DEBUG/log: newline_len val: %ld\n", bytes_read);
 
 	// scan buffer for newline or terminating?
 	// if scanned newline, pass chunk to return
-	printf("DEBUG/log: buffer val: %s\n", buffer);
+	//printf("DEBUG/log: buffer val: %s\n", buffer);
 	newline_len = ft_newline_strlen(buffer);
-	printf("DEBUG/log: newline_len val: %d\n", newline_len);
+	//printf("DEBUG/log: newline_len val: %ld\n", newline_len);
 	if (newline_len == 0)
 		return (ft_strdup("\n"));
-	else if (newline_len < 0)
-	{
-		printf("DEBUG/log\n");
+	else if (newline_len == (size_t)(-1))
 		return (NULL);
-	}
 	else if (newline_len > 0)
 	{
 		string_return = malloc(sizeof(char) * newline_len + 1);
@@ -83,20 +80,23 @@ char	*ft_read_line(int fd, char **storage)
 	return (NULL);
 }
 
-int		ft_newline_strlen(char *input)
+size_t		ft_newline_strlen(char *input)
 {
-	int	i;
-	int	len;
+	size_t	i;
+	size_t	len;
 
 	i = 0;
 	len = ft_strlen(input);
+	//printf("DEBUG/log: len: %ld\n", len);
 	while (i < len + 2)
 	{
+		//printf("DEBUG/log: i val: %ld\n", i);
+		 
 		if (input[i] == '\n')
 			return (i);
 		i++;
 	}
-	return (-1);
+	return ((size_t)(-1));
 }
 
 // pass storage by reference to alter
