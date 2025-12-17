@@ -1,16 +1,10 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    README.md                                          :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: ryatan <ryatan@student.42singapore.sg      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/12/10 09:47:01 by ryatan            #+#    #+#              #
-#    Updated: 2025/12/10 09:47:08 by ryatan           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+*This project has been created as part of the 42 curriculum by ryatan*
+
+---
 
 # get_next_line
+
+---
 
 >[!WARNING]
 >segfault always
