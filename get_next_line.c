@@ -6,7 +6,7 @@
 /*   By: ryatan <ryatan@student.42singapore.sg      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 20:52:55 by ryatan            #+#    #+#             */
-/*   Updated: 2025/12/14 08:06:44 by ryatan           ###   ########.fr       */
+/*   Updated: 2025/12/17 06:30:22 by ryatan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 // use BUFFER_SIZE to allocate memory
 // do not use buffer[BUFFER_SIZE]
 char	*ft_read_line(int fd, char **storage);
-size_t		ft_newline_strlen(char *input);
 void	ft_append_storage(char *data, char **storage);
+char	*ft_scan_storage(char match, char **storage);
 
 char	*get_next_line(int fd)
 {
@@ -36,9 +36,7 @@ char	*ft_read_line(int fd, char **storage)
 {
 	ssize_t	bytes_read;
 	char	*buffer;
-	char	*string_return;
-	char	*string_remainder;
-	size_t		newline_len;
+	char	*return_string;
 
 	// assign memory for buffer
 	// SOMETHING IS VERY WRONG HERE
@@ -47,68 +45,25 @@ char	*ft_read_line(int fd, char **storage)
 		return (NULL);
 	bytes_read = read(fd, buffer, BUFFER_SIZE); 
 	buffer[bytes_read] = '\0';
-	//printf("DEBUG/log: buffer val: %d\n", buffer[bytes_read]);
-	//printf("DEBUG/log: newline_len val: %ld\n", bytes_read);
 
-	// scan buffer for newline or terminating?
-	// if scanned newline, pass chunk to return
-	//printf("DEBUG/log: buffer val: %s\n", buffer);
-	newline_len = ft_newline_strlen(buffer);
-	//printf("DEBUG/log: newline_len val: %ld\n", newline_len);
-	if (newline_len == 0)
-		return (ft_strdup("\n"));
-	else if (newline_len == (size_t)(-1))
-		return (NULL);
-	else if (newline_len > 0)
-	{
-		string_return = malloc(sizeof(char) * newline_len + 1);
-		if (!string_return)
-			return (NULL);
-		ft_memcpy(string_return, buffer, newline_len + 1);
-		if (buffer[newline_len] != '\0')
-		{
-			string_remainder = ft_strdup((ft_strchr(buffer, '\n') + 1));
-			if (!string_remainder)
-				return (NULL);
-			ft_append_storage(string_remainder, storage);
-			free(string_remainder);
-		}
-		return (string_return);
-	}
-	else
-		ft_append_storage(buffer, storage);
-	return (NULL);
+	printf("DEBUG/log: buffer: %s\n", buffer);
+	printf("DEBUG/log: storage: %s\n", *storage);
+	ft_append_storage(buffer, storage);
+	printf("DEBUG/log: storage: %s\n", *storage);
+	return_string = ft_scan_storage('\n', storage);
+	printf("DEBUG/log: return string: %s\n", return_string);
+	return (*storage);
 }
 
-size_t		ft_newline_strlen(char *input)
-{
-	size_t	i;
-	size_t	len;
-
-	i = 0;
-	len = ft_strlen(input);
-	//printf("DEBUG/log: len: %ld\n", len);
-	while (i < len + 2)
-	{
-		//printf("DEBUG/log: i val: %ld\n", i);
-		 
-		if (input[i] == '\n')
-			return (i);
-		i++;
-	}
-	return ((size_t)(-1));
-}
-
-// pass storage by reference to alter
 void	ft_append_storage(char *data, char **storage)
 {
 	size_t	data_len;
-	size_t	storage_len;
 	char	*new_storage;
 
 	data_len = ft_strlen(data);
-	storage_len = ft_strlen(*storage);
-	if (storage_len == 0)
+	if (!data)
+		return (NULL);
+	if (!*storage)
 	{
 		*storage = malloc(sizeof(char) * data_len + 1);
 		if (!*storage)
@@ -126,6 +81,26 @@ void	ft_append_storage(char *data, char **storage)
 	}
 }
 
+char	*ft_scan_storage(char match, char **storage)
+{
+	int	end;
+	char	*found;
+
+	end = 0;
+	while ((*storage)[end])
+	{
+		if ((*storage)[end] == match)
+			break;
+		end++;
+	}
+	if ((*storage)[end] == '\0')
+		return (NULL);
+	found = malloc(sizeof(char) * (end + 1));
+	ft_memcpy(found, *storage, end);
+	found[end] = '\0';
+	return (found);
+}
+
 int	main(void)
 {
 	int	fd;
@@ -133,8 +108,6 @@ int	main(void)
 
 	fd = open("testfile.txt", O_RDONLY);
 	str = get_next_line(fd);
-	printf("OUTPUT> %s\n", str);
-	//str = get_next_line(fd);
 	//printf("OUTPUT> %s\n", str);
 	//return (0);
 }
