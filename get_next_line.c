@@ -6,7 +6,7 @@
 /*   By: ryatan <ryatan@student.42singapore.sg      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 20:52:55 by ryatan            #+#    #+#             */
-/*   Updated: 2025/12/17 06:30:22 by ryatan           ###   ########.fr       */
+/*   Updated: 2025/12/17 18:08:47 by ryatan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,13 @@ char	*ft_read_line(int fd, char **storage)
 		return (NULL);
 	bytes_read = read(fd, buffer, BUFFER_SIZE); 
 	buffer[bytes_read] = '\0';
-
 	printf("DEBUG/log: buffer: %s\n", buffer);
 	printf("DEBUG/log: storage: %s\n", *storage);
 	ft_append_storage(buffer, storage);
 	printf("DEBUG/log: storage: %s\n", *storage);
 	return_string = ft_scan_storage('\n', storage);
 	printf("DEBUG/log: return string: %s\n", return_string);
-	return (*storage);
+	return (return_string);
 }
 
 void	ft_append_storage(char *data, char **storage)
@@ -62,7 +61,7 @@ void	ft_append_storage(char *data, char **storage)
 
 	data_len = ft_strlen(data);
 	if (!data)
-		return (NULL);
+		return ;
 	if (!*storage)
 	{
 		*storage = malloc(sizeof(char) * data_len + 1);
@@ -83,14 +82,19 @@ void	ft_append_storage(char *data, char **storage)
 
 char	*ft_scan_storage(char match, char **storage)
 {
-	int	end;
+	int		end;
 	char	*found;
-
+	
+	if (!*storage)
+		return (NULL);
 	end = 0;
 	while ((*storage)[end])
 	{
 		if ((*storage)[end] == match)
+		{
+			end += 1;
 			break;
+		}
 		end++;
 	}
 	if ((*storage)[end] == '\0')
@@ -98,7 +102,23 @@ char	*ft_scan_storage(char match, char **storage)
 	found = malloc(sizeof(char) * (end + 1));
 	ft_memcpy(found, *storage, end);
 	found[end] = '\0';
+	ft_remove_from_storage(storage);
 	return (found);
+}
+
+void	ft_remove_from_storage(char **storage)
+{
+	char	*ptr_remainder;
+	size_t	len_ptr_remainder;
+	char	*remainder;
+
+	ptr_remainder = ft_strchr(*storage, '\n') + 1;
+	len_ptr_remainder = ft_strlen(ptr_remainder);
+	remainder = malloc(sizeof(char) * (len_ptr_remainder + 1));
+	ft_memcpy(remainder, ptr_remainder, len_ptr_remainder);
+	remainder[len_ptr_remainder] = '\0';
+	free(*storage);
+	*storage = remainder;
 }
 
 int	main(void)
