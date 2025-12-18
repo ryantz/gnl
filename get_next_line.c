@@ -6,22 +6,22 @@
 /*   By: ryatan <ryatan@student.42singapore.sg      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 20:52:55 by ryatan            #+#    #+#             */
-/*   Updated: 2025/12/17 18:08:47 by ryatan           ###   ########.fr       */
+/*   Updated: 2025/12/18 06:14:30 by ryatan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include  "get_next_line.h"
+#include "get_next_line.h"
 
-// use BUFFER_SIZE to allocate memory
-// do not use buffer[BUFFER_SIZE]
 char	*ft_read_line(int fd, char **storage);
 void	ft_append_storage(char *data, char **storage);
 char	*ft_scan_storage(char match, char **storage);
+void	ft_remove_from_storage(char **storage);
+char	*ft_return_remainder(char **storage);
 
 char	*get_next_line(int fd)
 {
 	static char	*storage;
-	char	*return_string;
+	char		*return_string;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -30,28 +30,35 @@ char	*get_next_line(int fd)
 	return (return_string);
 }
 
-// read the file info into a buffer
-// use malloc so that variable array is not used
+// read returns 0 -> EOF (handle this)
+// read returns num of bytes read
+// read returns -1 on error (handle this)
 char	*ft_read_line(int fd, char **storage)
 {
 	ssize_t	bytes_read;
 	char	*buffer;
 	char	*return_string;
 
-	// assign memory for buffer
-	// SOMETHING IS VERY WRONG HERE
 	buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	bytes_read = read(fd, buffer, BUFFER_SIZE); 
-	buffer[bytes_read] = '\0';
-	printf("DEBUG/log: buffer: %s\n", buffer);
-	printf("DEBUG/log: storage: %s\n", *storage);
-	ft_append_storage(buffer, storage);
-	printf("DEBUG/log: storage: %s\n", *storage);
-	return_string = ft_scan_storage('\n', storage);
-	printf("DEBUG/log: return string: %s\n", return_string);
-	return (return_string);
+	bytes_read = 1;
+	while (bytes_read > 0)
+	{
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read < 0)
+			return (free(buffer), NULL);
+		buffer[bytes_read] = '\0';
+		ft_append_storage(buffer, storage);
+		return_string = ft_scan_storage('\n', storage);
+		if (return_string)
+			return (free(buffer), return_string);
+	}
+	free(buffer);
+	if (*storage && **storage)
+		return (return_string = ft_strdup(*storage), free(*storage),
+			*storage = NULL, return_string);
+	return (NULL);
 }
 
 void	ft_append_storage(char *data, char **storage)
@@ -59,9 +66,9 @@ void	ft_append_storage(char *data, char **storage)
 	size_t	data_len;
 	char	*new_storage;
 
-	data_len = ft_strlen(data);
 	if (!data)
 		return ;
+	data_len = ft_strlen(data);
 	if (!*storage)
 	{
 		*storage = malloc(sizeof(char) * data_len + 1);
@@ -84,7 +91,7 @@ char	*ft_scan_storage(char match, char **storage)
 {
 	int		end;
 	char	*found;
-	
+
 	if (!*storage)
 		return (NULL);
 	end = 0;
@@ -93,11 +100,11 @@ char	*ft_scan_storage(char match, char **storage)
 		if ((*storage)[end] == match)
 		{
 			end += 1;
-			break;
+			break ;
 		}
 		end++;
 	}
-	if ((*storage)[end] == '\0')
+	if (!ft_strchr(*storage, match))
 		return (NULL);
 	found = malloc(sizeof(char) * (end + 1));
 	ft_memcpy(found, *storage, end);
@@ -119,15 +126,4 @@ void	ft_remove_from_storage(char **storage)
 	remainder[len_ptr_remainder] = '\0';
 	free(*storage);
 	*storage = remainder;
-}
-
-int	main(void)
-{
-	int	fd;
-	char	*str;
-
-	fd = open("testfile.txt", O_RDONLY);
-	str = get_next_line(fd);
-	//printf("OUTPUT> %s\n", str);
-	//return (0);
 }
