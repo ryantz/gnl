@@ -6,13 +6,16 @@
 
 ---
 
->[!WARNING]
->segfault always
-
----
-
 ## Project Description
-The point of this project is to get the next line from a file specified.
+
+This aim of this project is the create a function; get_next_line(). This function returns a line from a file specified for each call. 
+
+The prototype of the function is as follows: 
+
+```c
+char *get_next_line(int fd)
+```
+
 
 ---
 

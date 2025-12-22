@@ -6,7 +6,7 @@
 /*   By: ryatan <ryatan@student.42singapore.sg      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 20:52:55 by ryatan            #+#    #+#             */
-/*   Updated: 2025/12/18 06:14:30 by ryatan           ###   ########.fr       */
+/*   Updated: 2025/12/22 10:17:33 by ryatan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*ft_read_line(int fd, char **storage);
 void	ft_append_storage(char *data, char **storage);
 char	*ft_scan_storage(char match, char **storage);
 void	ft_remove_from_storage(char **storage);
-char	*ft_return_remainder(char **storage);
 
 char	*get_next_line(int fd)
 {
