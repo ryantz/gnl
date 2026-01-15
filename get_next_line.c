@@ -6,7 +6,7 @@
 /*   By: ryatan <ryatan@student.42singapore.sg      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 20:52:55 by ryatan            #+#    #+#             */
-/*   Updated: 2025/12/22 10:17:33 by ryatan           ###   ########.fr       */
+/*   Updated: 2026/01/15 14:14:04 by ryatan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ char	*get_next_line(int fd)
 	return (return_string);
 }
 
-// read returns 0 -> EOF (handle this)
-// read returns num of bytes read
-// read returns -1 on error (handle this)
 char	*ft_read_line(int fd, char **storage)
 {
 	ssize_t	bytes_read;
