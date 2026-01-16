@@ -20,20 +20,26 @@ Stateful processing is achieved in this project by using a static variable to pr
 #### helper functions
 
 ```c
-char    *ft_read_line(int fd, char **storage
+char    *ft_read_line(int fd, char **storage)
 ```
+Reads a line from the text file and stores it into the static variable "storage".
 
 ```c
 void    ft_append_storage(char *data, char **storage)
 ```
+Adds the scanned line into the storage.
 
 ```c
 void    *ft_scan_storage(char match, char **storage)
 ```
+Scans the storage after adding to scan for a newline character or terminating character.
 
 ```c
 void    ft_remove_from_strorage(char **storage)
 ```
+
+Remove from storage if a newline or terminating character is detected.
+
 ---
 
 ## Instruction
