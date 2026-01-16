@@ -47,6 +47,25 @@ and run
 ```
 You could also use
 
+#### Testing file
+
+```c
+#include "get_next_line.h"
+
+int main(void)
+{
+    return (0);
+}
+```
+
+```c
+#include "get_next_line.h"
+
+int main(int argc, char **argv)
+{
+    return (0);
+}
+```
 ---
 ## Resources
 ---
