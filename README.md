@@ -38,7 +38,7 @@ Scans the storage after adding to scan for a newline character or terminating ch
 void    ft_remove_from_strorage(char **storage)
 ```
 
-Remove from storage if a newline or terminating character is detected.
+Remove from storage if a newline character is detected and then updates the storage to only contain the remainder after the newline character.
 
 ---
 
@@ -55,21 +55,59 @@ You could also use
 
 #### Testing file
 
+Testing with file path hard coded:
 ```c
 #include "get_next_line.h"
 
-int main(void)
+int	main(void)
 {
-    return (0);
+	const char	*file_path;
+	int			fd;
+	char		*line_got;
+	
+	file_path = "./testfile.txt";
+	fd = open(file_path, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Error opening file\n");
+		return (1);
+	}
+	while ((line_got = get_next_line(fd)) != NULL)
+	{
+		printf("%s", line_got);
+		free(line_got);
+	}
+	close(fd);
+	return (0);
 }
 ```
 
+Testing from terminal input:
 ```c
 #include "get_next_line.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    return (0);
+	const char	*user_input_file_path;
+	char		*line_got;
+	int			fd;
+	
+	if (argc < 1)
+		return (1);
+	user_input_file_path = argv[1];
+	fd = open(user_input_file_path, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("File not opened\n");
+		return (1);
+	}
+	while ((line_got = get_next_line(fd)) != NULL)
+	{
+		printf("%s", line_got);
+		free(line_got);
+	}
+	close(fd);
+	return (0);
 }
 ```
 ---
