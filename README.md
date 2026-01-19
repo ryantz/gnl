@@ -43,16 +43,6 @@ Remove from storage if a newline character is detected and then updates the stor
 ---
 
 ## Instruction
-Compile the program into an executable:
-```bash
-cc -Wall -Wextra -Werror get_next_line.c get_next_line_utils.c -o gnl
-```
-and run
-```bash
-./gnl
-```
-You could also use
-
 #### Testing file
 
 Testing with file path hard coded:
@@ -109,6 +99,14 @@ int	main(int argc, char **argv)
 	close(fd);
 	return (0);
 }
+```
+Compile the program into an executable:
+```bash
+cc -Wall -Wextra -Werror get_next_line.c get_next_line_utils.c  main.c -o gnl
+```
+and run
+```bash
+./gnl
 ```
 ---
 ## Resources
