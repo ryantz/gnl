@@ -46,6 +46,8 @@ Remove from storage if a newline character is detected and then updates the stor
 #### Testing file
 
 Testing with file path hard coded:
+
+##### main.c
 ```c
 #include "get_next_line.h"
 
@@ -73,6 +75,8 @@ int	main(void)
 ```
 
 Testing from terminal input:
+
+##### main_term_input.c
 ```c
 #include "get_next_line.h"
 
@@ -99,6 +103,15 @@ int	main(int argc, char **argv)
 	close(fd);
 	return (0);
 }
+``` 
+Example test file:
+
+##### test_file.txt
+```txt
+hello there
+    what is
+        your
+    name
 ```
 Compile the program into an executable:
 ```bash
