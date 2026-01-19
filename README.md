@@ -114,12 +114,18 @@ hello there
     name
 ```
 Compile the program into an executable:
+
 ```bash
-cc -Wall -Wextra -Werror get_next_line.c get_next_line_utils.c  main.c -o gnl
+cc -Wall -Wextra -Werror get_next_line.c get_next_line_utils.c main.c -o gnl
 ```
 and run
+
 ```bash
 ./gnl
+```
+or
+```bash
+./gnl test_file.txt
 ```
 ---
 ## Resources
