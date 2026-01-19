@@ -11,9 +11,7 @@
 This aim of this project is the create a function; get_next_line(). This function returns a line from a file specified for each call. 
 
 The prototype of the function is as follows: 
-
-```c
-char *get_next_line(int fd)
+```c char    *get_next_line(int fd)
 ```
 Stateful processing is achieved in this project by using a static variable to preserve the state between calls.
 
@@ -43,7 +41,6 @@ Remove from storage if a newline character is detected and then updates the stor
 ---
 
 ## Instruction
-#### Testing file
 
 Testing with file path hard coded:
 
@@ -108,7 +105,7 @@ int	main(int argc, char **argv)
 ``` 
 Example test file:
 
-##### test_file.txt
+##### testfile.txt
 ```txt
 hello there
     what is
@@ -120,6 +117,11 @@ Compile the program into an executable:
 ```bash
 cc -Wall -Wextra -Werror get_next_line.c get_next_line_utils.c main.c -o gnl
 ```
+or if you want to specify a buffer size:
+
+```bash
+cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c main.c -o gnl
+```
 and run
 
 ```bash
@@ -127,7 +129,7 @@ and run
 ```
 or
 ```bash
-./gnl test_file.txt
+./gnl testfile.txt
 ```
 ---
 ## Resources
