@@ -11,7 +11,8 @@
 This aim of this project is the create a function; get_next_line(). This function returns a line from a file specified for each call. 
 
 The prototype of the function is as follows: 
-```c char    *get_next_line(int fd)
+```c 
+char    *get_next_line(int fd)
 ```
 Stateful processing is achieved in this project by using a static variable to preserve the state between calls.
 
