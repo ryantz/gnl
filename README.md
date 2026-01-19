@@ -50,6 +50,7 @@ Testing with file path hard coded:
 ##### main.c
 ```c
 #include "get_next_line.h"
+#include <stdio.h>
 
 int	main(void)
 {
@@ -79,6 +80,7 @@ Testing from terminal input:
 ##### main_term_input.c
 ```c
 #include "get_next_line.h"
+#include <stdio.h>
 
 int	main(int argc, char **argv)
 {
